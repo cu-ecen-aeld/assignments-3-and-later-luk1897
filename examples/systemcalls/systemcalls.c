@@ -1,4 +1,10 @@
 #include "systemcalls.h"
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 
 /**
  * @param cmd the command to execute with system()
@@ -16,6 +22,13 @@ bool do_system(const char *cmd)
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
 */
+   
+    if(system(cmd) == -1){
+        fprintf(stderr, "System cmd error!: %s", strerror(errno));
+        return false;
+    }
+    else printf("system ok\n");
+
 
     return true;
 }
@@ -48,7 +61,7 @@ bool do_exec(int count, ...)
     // this line is to avoid a compile warning before your implementation is complete
     // and may be removed
     command[count] = command[count];
-
+    
 /*
  * TODO:
  *   Execute a system command by calling fork, execv(),
@@ -58,8 +71,34 @@ bool do_exec(int count, ...)
  *   as second argument to the execv() command.
  *
 */
+    fflush(stdout);
+    pid_t pid = fork();
 
-    va_end(args);
+    if(pid == -1){
+        fprintf(stderr, "fork error: %s", strerror(errno));
+        exit(false);
+    }
+    if(pid == 0){
+        if(count == 3 && command[2][0] != '/') exit(false);
+
+        if(execv(command[0], command) == -1){
+            fprintf(stderr, "execv error: %s", strerror(errno));
+            exit(false);
+        }
+    }
+    else if(pid > 0){
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)){
+            va_end(args);
+            if(count == 3 && command[2][0] == '/') return !WEXITSTATUS(status);
+            else return WEXITSTATUS(status);
+        }
+        
+    }
+    
+
+    
 
     return true;
 }
@@ -93,7 +132,37 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *
 */
 
-    va_end(args);
+    fflush(stdout);
+    pid_t pid = fork();
+
+    if(pid == -1){
+        fprintf(stderr, "fork error: %s", strerror(errno));
+        exit(false);
+    }
+    if(pid == 0){
+        int fd = open(outputfile, O_CREAT|O_TRUNC|O_WRONLY, 0644);
+
+        if(dup2(fd, STDOUT_FILENO) == -1){
+            fprintf(stderr, "dup2 error: %s", strerror(errno));
+            exit(false);
+        }
+        close(fd);
+        
+        if(execv(command[0], command) == -1){
+            fprintf(stderr, "execv error: %s", strerror(errno));
+            exit(false);
+        }
+    }
+    else if(pid > 0){
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)){
+            va_end(args);
+            if(count == 2 && command[1][0] == '/') return !WEXITSTATUS(status);
+            else return WEXITSTATUS(status);
+        }
+        
+    }
 
     return true;
 }
