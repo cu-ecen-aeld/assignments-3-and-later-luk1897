@@ -15,7 +15,9 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run unit test
             run:  |
-                  find toolchain/ -name "ld-linux-aarch64.so.1"
+                  echo "PWD: $(pwd)"
+                  echo "Contenuto:"
+                  ls -la
                   ./unit-test.sh
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
@@ -26,5 +28,7 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run full test
             run: |
-                 find toolchain/ -name "ld-linux-aarch64.so.1"
+                 echo "PWD: $(pwd)"
+                 echo "Contenuto:"
+                 ls -la
                  ./full-test.sh
