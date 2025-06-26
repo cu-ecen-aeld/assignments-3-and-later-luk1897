@@ -101,11 +101,13 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
 
+Pth=/__w/assignments-3-and-later-luk1897/assignments-3-and-later-luk1897
 
-so1=$(find toolchain/ -name "ld-linux-aarch64.so.1")
-so2=$(find toolchain/ -name "libm.so.6")
-so3=$(find toolchain/ -name "libresolv.so.2")
-so4=$(find toolchain/ -name "libc.so.6")
+
+so1=$(find ${Pth}/toolchain/ -name "ld-linux-aarch64.so.1")
+so2=$(find ${Pth}/toolchain/ -name "libm.so.6")
+so3=$(find ${Pth}/toolchain/ -name "libresolv.so.2")
+so4=$(find ${Pth}/toolchain/ -name "libc.so.6")
 
 cp "$so1" "$OUTDIR/rootfs/lib"
 cp "$so2" "$OUTDIR/rootfs/lib64"
@@ -125,15 +127,14 @@ fi
 
 # TODO: Clean and build the writer utility
 
-P2=/home/luk/Desktop/assignment-2-luk1897
-P3=/home/luk/Desktop/assignments-3-and-later-luk1897
+P2=/__w/assignments-3-and-later-luk1897/assignments-3-and-later-luk1897/finder-app
 
 if [ ! -e "${OUTDIR}/rootfs/home/Makefile" ]; then
-    cp "${FINDER_APP_DIR}/Makefile" "${OUTDIR}/rootfs/home/"
+    cp "${P2}/Makefile" "${OUTDIR}/rootfs/home/"
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/writer.c" ]; then
-    cp "${FINDER_APP_DIR}/writer.c" ${OUTDIR}/rootfs/home/
+    cp "${P2}/writer.c" ${OUTDIR}/rootfs/home/
 fi
 
 cd ${OUTDIR}/rootfs/home
@@ -149,23 +150,23 @@ if [ ! -d "${OUTDIR}/rootfs/home/conf" ]; then
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/finder.sh" ]; then
-    cp "${FINDER_APP_DIR}/finder.sh" "${OUTDIR}/rootfs/home/"
+    cp "${P2}/finder.sh" "${OUTDIR}/rootfs/home/"
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/conf/username.txt" ]; then
-    cp "${FINDER_APP_DIR}/username.txt" "${OUTDIR}/rootfs/home/conf"
+    cp "${P2}/username.txt" "${OUTDIR}/rootfs/home/conf"
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/conf/assignment.txt" ]; then
-    cp "${FINDER_APP_DIR}/assignment.txt" "${OUTDIR}/rootfs/home/conf"
+    cp "${P2}/assignment.txt" "${OUTDIR}/rootfs/home/conf"
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/finder-test.sh" ]; then
-    cp "${FINDER_APP_DIR}/finder-test.sh" "${OUTDIR}/rootfs/home/"
+    cp "${P2}/finder-test.sh" "${OUTDIR}/rootfs/home/"
 fi
 
 if [ ! -e "${OUTDIR}/rootfs/home/autorun-qemu.sh" ]; then
-    cp "${FINDER_APP_DIR}/autorun-qemu.sh" "${OUTDIR}/rootfs/home/"
+    cp "${P2}/autorun-qemu.sh" "${OUTDIR}/rootfs/home/"
 fi
 
 
