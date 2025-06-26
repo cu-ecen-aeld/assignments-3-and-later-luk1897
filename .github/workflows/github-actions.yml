@@ -15,9 +15,8 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run unit test
             run: ./unit-test.sh
-                  ls -la /home/luk/Desktop 
-                  echo "Contenuto di /home/luk/Desktop/toolchain:"
-                  ls -la /home/luk/Desktop/toolchain 
+                  ls /home/luk/Desktop 
+                  ls /home/luk/Desktop/toolchain 
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
         runs-on: self-hosted
