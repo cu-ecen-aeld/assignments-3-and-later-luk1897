@@ -22,6 +22,7 @@ jobs:
                   ls -la /home/luk/Desktop || echo "NO ACCESS"
                   echo "Contenuto di /opt/toolchain:"
                   ls -la /opt/toolchain || echo "NO ACCESS"
+                  ls -la $GITHUB_WORKSPACE/toolchain || echo "NO ACCESS"
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
         runs-on: self-hosted
@@ -37,4 +38,5 @@ jobs:
                   ls -la /home/luk/Desktop || echo "NO ACCESS"
                   echo "Contenuto di /opt/toolchain:"
                   ls -la /opt/toolchain || echo "NO ACCESS"
+                  ls -la $GITHUB_WORKSPACE/toolchain || echo "NO ACCESS"
                   ./full-test.sh
