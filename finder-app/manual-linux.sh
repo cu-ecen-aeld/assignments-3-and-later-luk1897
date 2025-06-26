@@ -100,6 +100,7 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
 
+
 so1=$(find toolchain/ -name "ld-linux-aarch64.so.1")
 so2=$(find toolchain/ -name "libm.so.6")
 so3=$(find toolchain/ -name "libresolv.so.2")
