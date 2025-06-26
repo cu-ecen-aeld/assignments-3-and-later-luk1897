@@ -15,7 +15,7 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run unit test
             run:  |
-                  ls -la toolchain || echo "no access"
+                  find toolchain/ -name "ld-linux-aarch64.so.1"
                   ./unit-test.sh
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
@@ -26,5 +26,5 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run full test
             run: |
-                 ls -la toolchain || echo "no access"
+                 find toolchain/ -name "ld-linux-aarch64.so.1"
                  ./full-test.sh
