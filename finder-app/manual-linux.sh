@@ -120,6 +120,7 @@ if [ ! -e "${OUTDIR}/rootfs/dev/console" ]; then
     sudo mknod -m 666 dev/console c 5 1
 fi
 
+
 # TODO: Clean and build the writer utility
 
 P2=/home/luk/Desktop/assignment-2-luk1897
