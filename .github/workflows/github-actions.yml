@@ -15,6 +15,11 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run unit test
             run: ./unit-test.sh
+                  ls -la /home/luk || echo "/home/luk NON accessibile"
+                  echo "Contenuto di /home/luk/Desktop:"
+                  ls -la /home/luk/Desktop || echo "/home/luk/Desktop NON accessibile"
+                  echo "Contenuto di /home/luk/Desktop/toolchain:"
+                  ls -la /home/luk/Desktop/toolchain || echo "/home/luk/Desktop/toolchain NON accessibile"
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
         runs-on: self-hosted
