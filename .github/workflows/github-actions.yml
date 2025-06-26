@@ -14,8 +14,7 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run unit test
-            run:  ls -la /home/luk/Desktop/assignments3-and-later-luk1897 || echo "no access"
-                  ls -la /home/luk/Desktop/toolchain || echo "no access"
+            run:  ls -la toolchain || echo "no access"
                   ./unit-test.sh
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
@@ -25,4 +24,5 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run full test
-            run: ./full-test.sh
+            run: ls -la toolchain || echo "no access"
+                 ./full-test.sh
