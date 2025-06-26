@@ -14,15 +14,7 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run unit test
-            run:  |
-                  ./unit-test.sh
-                  echo "Utente effettivo: $(whoami)"
-                  echo "HOME: $HOME"
-                  echo "Contenuto di /home/luk/Desktop:"
-                  ls -la /home/luk/Desktop || echo "NO ACCESS"
-                  echo "Contenuto di /opt/toolchain:"
-                  ls -la /opt/toolchain || echo "NO ACCESS"
-                  ls -la usr/assign3_2-stuffs/toolchain || echo "NO ACCESS"
+            run:  ./unit-test.sh
     full-test:
         container: cuaesd/aesd-autotest:24-assignment3
         runs-on: self-hosted
@@ -31,12 +23,4 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run full test
-            run:  |
-                  echo "Utente effettivo: $(whoami)"
-                  echo "HOME: $HOME"
-                  echo "Contenuto di /home/luk/Desktop:"
-                  ls -la /home/luk/Desktop || echo "NO ACCESS"
-                  echo "Contenuto di /opt/toolchain:"
-                  ls -la /opt/toolchain || echo "NO ACCESS"
-                  ls -la $GITHUB_WORKSPACE/toolchain || echo "NO ACCESS"
-                  ./full-test.sh
+            run: ./full-test.sh
