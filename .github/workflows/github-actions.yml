@@ -14,6 +14,7 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run unit test
+<<<<<<< HEAD
             run:  |
                   echo "PWD: $(pwd)"
                   echo "Contenuto:"
@@ -32,3 +33,6 @@ jobs:
                  echo "Contenuto:"
                  ls -la
                  ./full-test.sh
+=======
+            run: ./unit-test.sh
+>>>>>>> assignments-base/assignment4
