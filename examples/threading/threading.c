@@ -66,6 +66,7 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex,int 
         fprintf(stderr, "Error with pthread create: %s", strerror(errno));
         free(param);
     }
+    
     else return true;
 
 
