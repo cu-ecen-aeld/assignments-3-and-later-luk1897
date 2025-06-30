@@ -14,25 +14,4 @@ jobs:
           - name: Checkout submodules
             run : git submodule update --init --recursive
           - name: Run unit test
-<<<<<<< HEAD
-            run:  |
-                  echo "PWD: $(pwd)"
-                  echo "Contenuto:"
-                  ls -la
-                  ./unit-test.sh
-    full-test:
-        container: cuaesd/aesd-autotest:24-assignment3
-        runs-on: self-hosted
-        steps:
-          - uses: actions/checkout@v2
-          - name: Checkout submodules
-            run : git submodule update --init --recursive
-          - name: Run full test
-            run: |
-                 echo "PWD: $(pwd)"
-                 echo "Contenuto:"
-                 ls -la
-                 ./full-test.sh
-=======
             run: ./unit-test.sh
->>>>>>> assignments-base/assignment4
