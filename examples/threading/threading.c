@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
 
 // Optional: use these functions to add debug or error prints to your application
 #define DEBUG_LOG(msg,...)
@@ -14,7 +16,29 @@ void* threadfunc(void* thread_param)
     // TODO: wait, obtain mutex, wait, release mutex as described by thread_data structure
     // hint: use a cast like the one below to obtain thread arguments from your parameter
     //struct thread_data* thread_func_args = (struct thread_data *) thread_param;
-    return thread_param;
+    
+    struct thread_data* thread_func_args = (struct thread_data *) thread_param;
+
+    usleep(thread_func_args->obtain * 1000);
+
+    if(pthread_mutex_lock(thread_func_args->mutex) != 0){
+        fprintf(stderr, "Error with mutex lock: %s", strerror(errno));
+        thread_func_args->thread_complete_success = false;
+        return (void*)thread_param;
+    }
+
+    usleep(thread_func_args->release * 1000);
+
+    if(pthread_mutex_unlock(thread_func_args->mutex) != 0){
+        fprintf(stderr, "Error with mutex unlock: %s", strerror(errno));
+        thread_func_args->thread_complete_success = false;
+        return (void*)thread_param;
+    }
+    
+    
+    thread_func_args->thread_complete_success = true;
+
+    return (void *) thread_func_args;
 }
 
 
@@ -23,11 +47,28 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex,int 
     /**
      * TODO: allocate memory for thread_data, setup mutex and wait arguments, pass thread_data to created thread
      * using threadfunc() as entry point.
+     * 
      *
      * return true if successful.
      *
      * See implementation details in threading.h file comment block
      */
+     
+    struct thread_data* param = malloc(sizeof(struct thread_data));
+
+    param->mutex = mutex;
+
+    param->obtain = wait_to_obtain_ms;
+    param->release = wait_to_release_ms;
+
+    param->thread = thread;
+    if(pthread_create(param->thread, NULL, threadfunc, (void *) param) != 0){
+        fprintf(stderr, "Error with pthread create: %s", strerror(errno));
+        free(param);
+    }
+    else return true;
+
+
     return false;
 }
 
