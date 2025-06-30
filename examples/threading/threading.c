@@ -53,6 +53,7 @@ bool start_thread_obtaining_mutex(pthread_t *thread, pthread_mutex_t *mutex,int 
      *
      * See implementation details in threading.h file comment block
      */
+    
      
     struct thread_data* param = malloc(sizeof(struct thread_data));
 
