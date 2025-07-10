@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
     
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
-    server_addr.sin_addr.s_addr = inet_addr(IP);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
 
 
     if(bind(serverfd, (struct sockaddr*) &server_addr, sizeof(server_addr)) == -1){
